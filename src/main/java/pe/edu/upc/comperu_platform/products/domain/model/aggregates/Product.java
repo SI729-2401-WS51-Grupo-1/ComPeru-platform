@@ -73,13 +73,16 @@ public class Product extends AbstractAggregateRoot<Product> {
     @NotNull
     private Entrepreneur entrepreneur;
 
+    @Embedded
+    private final GalleryAssets galleryAssets;
+
+
     @ManyToOne
     @JoinColumn(name= "next_product_id")
     private Product nextProduct;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ImageAsset> images;
+
 
     public void updateNextProduct(Product nextProduct){
         this.nextProduct=nextProduct;
@@ -90,6 +93,8 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.rating= new ProductRatingsMetricSet();
         this.totalReviews=new ProductReviewsMetricSet();
         this.nextProduct=null;
+        this.galleryAssets = new GalleryAssets();
+
     }
 
 
@@ -112,8 +117,8 @@ public class Product extends AbstractAggregateRoot<Product> {
                    ProductReviewsMetricSet totalReviews,
                    Brand brand,
                    Category category,
-                   Entrepreneur entrepreneur
-                   ){
+                   Entrepreneur entrepreneur, GalleryAssets galleryAssets
+    ){
         this.name=name;
         this.description=description;
         this.modelNumber=modelNumber;
@@ -126,6 +131,7 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.brand=brand;
         this.category=category;
         this.entrepreneur=entrepreneur;
+        this.galleryAssets = galleryAssets;
     }
 
 
