@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -17,6 +18,7 @@ import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.*;
 import java.util.Date;
 import java.util.List;
 
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Product extends AbstractAggregateRoot<Product> {
@@ -66,51 +68,66 @@ public class Product extends AbstractAggregateRoot<Product> {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-
-//    @Embedded
-//    private BrandId brandId;
-
-//    @Column(nullable = false)
-//    @Embedded
-//    private CategoryId categoryId;
-
     @ManyToOne
     @JoinColumn(name = "entrepreneur_id")
     @NotNull
     private Entrepreneur entrepreneur;
 
+    @ManyToOne
+    @JoinColumn(name= "next_product_id")
+    private Product nextProduct;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ImageAsset> images;
 
-
-//    @Column(nullable = false)
-//    @Embedded
-//    EntrepreneurId entrepreneurId;
-
+    public void updateNextProduct(Product nextProduct){
+        this.nextProduct=nextProduct;
+    }
 
     public Product(){
         this.price=new Price();
         this.rating= new ProductRatingsMetricSet();
         this.totalReviews=new ProductReviewsMetricSet();
+        this.nextProduct=null;
     }
 
-//    public Product(Long brand_id,Long category_id,Long entrepreneur_id){
-//        this();
-////        this.brandId = new BrandId(brand_id);
-////        this.categoryId = new CategoryId(category_id);
-////        this.entrepreneurId= new EntrepreneurId(entrepreneur_id);
-//    }
 
-    public Product(Brand brand , Category category, Entrepreneur entrepreneur ){
+    public Product(Brand brand , Category category, Entrepreneur entrepreneur, Product nextProduct ){
         this();
         this.brand=brand;
         this.category=category;
         this.entrepreneur=entrepreneur;
-//        this.brandId=brand_id;
-//        this.categoryId=category_id;
-//        this.entrepreneurId=entrepreneur_id;
+        this.nextProduct= nextProduct;
     }
+
+    public Product(String name,
+                   String description,
+                   String modelNumber,
+                   String manufacturerNumber,
+                   Price price,
+                   Boolean availability,
+                   Integer stock,
+                   ProductRatingsMetricSet rating,
+                   ProductReviewsMetricSet totalReviews,
+                   Brand brand,
+                   Category category,
+                   Entrepreneur entrepreneur
+                   ){
+        this.name=name;
+        this.description=description;
+        this.modelNumber=modelNumber;
+        this.manufacturerNumber=manufacturerNumber;
+        this.price = price;
+        this.availability=availability;
+        this.stock=stock;
+        this.rating=rating;
+        this.totalReviews=totalReviews;
+        this.brand=brand;
+        this.category=category;
+        this.entrepreneur=entrepreneur;
+    }
+
 
 
 }
