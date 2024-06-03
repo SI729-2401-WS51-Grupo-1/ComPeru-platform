@@ -64,24 +64,22 @@ public class Product extends AbstractAggregateRoot<Product> {
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
-
     @ManyToOne
-    @JoinColumn(name = "entrepreneur_id")
-    @NotNull
-    private Entrepreneur entrepreneur;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Embedded
     private final GalleryAssets galleryAssets;
 
+    @Embedded
+    private ListReviews reviews;
+
+    @Embedded
+    private EntrepreneurId entrepreneurId;
 
     @ManyToOne
     @JoinColumn(name= "next_product_id")
     private Product nextProduct;
-
-
 
 
     public void updateNextProduct(Product nextProduct){
@@ -94,16 +92,17 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.totalReviews=new ProductReviewsMetricSet();
         this.nextProduct=null;
         this.galleryAssets = new GalleryAssets();
+        this.reviews = new ListReviews();
 
     }
 
 
-    public Product(Brand brand , Category category, Entrepreneur entrepreneur, Product nextProduct ){
+    public Product(Brand brand , Category category, Product nextProduct,EntrepreneurId entrepreneurId ){
         this();
         this.brand=brand;
         this.category=category;
-        this.entrepreneur=entrepreneur;
         this.nextProduct= nextProduct;
+        this.entrepreneurId = entrepreneurId;
     }
 
     public Product(String name,
@@ -117,21 +116,22 @@ public class Product extends AbstractAggregateRoot<Product> {
                    ProductReviewsMetricSet totalReviews,
                    Brand brand,
                    Category category,
-                   Entrepreneur entrepreneur, GalleryAssets galleryAssets
-    ){
-        this.name=name;
-        this.description=description;
-        this.modelNumber=modelNumber;
-        this.manufacturerNumber=manufacturerNumber;
+                   EntrepreneurId entrepreneurId
+                                                 ) {
+        this();
+        this.name = name;
+        this.description = description;
+        this.modelNumber = modelNumber;
+        this.manufacturerNumber = manufacturerNumber;
         this.price = price;
-        this.availability=availability;
-        this.stock=stock;
-        this.rating=rating;
-        this.totalReviews=totalReviews;
-        this.brand=brand;
-        this.category=category;
-        this.entrepreneur=entrepreneur;
-        this.galleryAssets = galleryAssets;
+        this.availability = availability;
+        this.stock = stock;
+        this.rating = rating;
+        this.totalReviews = totalReviews;
+        this.brand = brand;
+        this.category = category;
+        this.entrepreneurId = entrepreneurId;
+
     }
 
 

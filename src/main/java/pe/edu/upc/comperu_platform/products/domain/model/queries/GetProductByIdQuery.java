@@ -1,4 +1,4 @@
 package pe.edu.upc.comperu_platform.products.domain.model.queries;
 
-public record GetTotalReviewsByProductIdQuery(Long productId) {
+public record GetProductByIdQuery(Long productId) {
 }

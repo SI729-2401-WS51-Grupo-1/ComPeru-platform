@@ -1,8 +1,6 @@
 package pe.edu.upc.comperu_platform.products.domain.services;
 
-import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Order;
 import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
-import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Review;
 import pe.edu.upc.comperu_platform.products.domain.model.entities.ImageAsset;
 import pe.edu.upc.comperu_platform.products.domain.model.queries.*;
 
@@ -14,9 +12,9 @@ public interface ProductQueryService {
     Optional<Product> handle(GetProductByProductIdAndEntrepreneurIdQuery query);
     List<ImageAsset> handle(GetAllImagesByProductIdQuery query);
 
-    List<Product> handle(GetProductsByCategoryIdAndEntrepreneurIdQuery query);
-    List<Product> handle(GetProductsByBrandIdAndEntrepreneurIdQuery query);
-    List<Product> handle(GetProductsBySearchAndEntrepreneurIdQuery query);
+    List<Product> handle(GetAllProductsByCategoryIdQuery query);
+    List<Product> handle(GetAllProductsByBrandIdQuery query);
+    List<Product> handle(GetAllProductsBySearchAndEntrepreneurIdQuery query);
     List<Review> handle(GetAllReviewsByProductIdQuery query);
     Long handle(GetTotalReviewsByProductIdQuery query);
     Long handle(GetTotalReviewsByEntrepreneurIdQuery query);
