@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    List<Product> findByIdAndEntrepreneurId(Long id, EntrepreneurId entrepreneurId);
+    Optional<Product> findByIdAndEntrepreneurId(Long id, Long entrepreneurId);
     List<Product> findByBrandId(Long brandId);
+
+    List<Product> findByEntrepreneurId(Long entrepreneurId);
     List<Product> findByCategoryId(Long categoryId);
     Optional<Product> findByNameContainingIgnoreCase(String searchTerm);
     List<Product> findByAvailabilityTrue();
