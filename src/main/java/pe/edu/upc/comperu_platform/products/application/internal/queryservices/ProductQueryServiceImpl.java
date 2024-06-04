@@ -8,6 +8,7 @@ import pe.edu.upc.comperu_platform.products.domain.model.queries.*;
 import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.EntrepreneurId;
 import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.ReviewId;
 import pe.edu.upc.comperu_platform.products.domain.services.ProductQueryService;
+import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.CategoryRepository;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.ProductRepository;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import java.util.Optional;
 public class ProductQueryServiceImpl implements ProductQueryService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductQueryServiceImpl(ProductRepository productRepository){
+    public ProductQueryServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository){
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
     @Override
     public Optional<Product> handle(GetProductByIdQuery query) {
@@ -52,21 +55,25 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     @Override
     public List<Product> handle(GetAllProductsByCategoryIdQuery query) {
 
-        return null;
+        return productRepository.findByCategoryId(query.categoryId());
+
     }
 
     @Override
     public List<Product> handle(GetAllProductsByBrandIdQuery query) {
-        return null;
+
+
+        return productRepository.findByBrandId(query.brandId());
     }
 
     @Override
     public List<Product> handle(GetAllProductsBySearchQuery query) {
-        return null;
+
+        return productRepository.findByNameContainingIgnoreCase(query.searchTerm());
     }
 
     @Override
     public List<ReviewId> handle(GetAllReviewsByProductIdQuery query) {
-        return null;
+        return productRepository.findById(query.productId()).map(product -> product.getReviews().getReviews()).orElse(new ArrayList<>());
     }
 }
