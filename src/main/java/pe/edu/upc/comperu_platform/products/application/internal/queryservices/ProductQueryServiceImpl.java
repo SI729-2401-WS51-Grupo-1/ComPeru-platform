@@ -72,8 +72,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         return productRepository.findByNameContainingIgnoreCase(query.searchTerm());
     }
 
-    @Override
-    public List<ReviewId> handle(GetAllReviewsByProductIdQuery query) {
-        return productRepository.findById(query.productId()).map(product -> product.getReviews().getReviews()).orElse(new ArrayList<>());
-    }
+//    @Override
+//    public List<ReviewId> handle(GetAllReviewsByProductIdQuery query) {
+//        return productRepository.findById(query.productId()).map(product -> product.getReviews().getReviews()).orElse(new ArrayList<>());
+//    }
 }

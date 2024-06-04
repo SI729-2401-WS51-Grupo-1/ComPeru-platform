@@ -1,7 +1,6 @@
 package pe.edu.upc.comperu_platform.shared.domain.model.entities;
 
 import jakarta.persistence.*;
-import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Entrepreneur;
 
 import java.util.List;
 
@@ -29,9 +28,9 @@ public class User extends AuditableModel{
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Entrepreneur> entrepreneurs;
-
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Entrepreneur> entrepreneurs;
+//
 
 
     public User(){};

@@ -62,8 +62,8 @@ public class Product extends AbstractAggregateRoot<Product> {
     private Date updatedAt;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     @ManyToOne
@@ -73,8 +73,7 @@ public class Product extends AbstractAggregateRoot<Product> {
     @Embedded
     private final GalleryAssets galleryAssets;
 
-    @Embedded
-    private ListReviews reviews;
+//    private ListReviews reviews;
 
     @Embedded
     private EntrepreneurId entrepreneurId;
@@ -94,7 +93,7 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.totalReviews=new ProductReviewsMetricSet();
         this.nextProduct=null;
         this.galleryAssets = new GalleryAssets();
-        this.reviews = new ListReviews();
+//        this.reviews = new ListReviews();
 
     }
 

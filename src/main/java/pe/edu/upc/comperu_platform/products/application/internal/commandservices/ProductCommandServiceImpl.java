@@ -1,5 +1,6 @@
 package pe.edu.upc.comperu_platform.products.application.internal.commandservices;
 
+import org.springframework.stereotype.Service;
 import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
 import pe.edu.upc.comperu_platform.products.domain.model.commands.*;
 import pe.edu.upc.comperu_platform.products.domain.model.entities.Brand;
@@ -9,6 +10,8 @@ import pe.edu.upc.comperu_platform.products.domain.services.ProductCommandServic
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.BrandRepository;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.CategoryRepository;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.ProductRepository;
+
+@Service
 
 public class ProductCommandServiceImpl implements ProductCommandService {
 

@@ -6,6 +6,8 @@ import lombok.Setter;
 import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
 import pe.edu.upc.comperu_platform.shared.domain.model.entities.User;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -16,6 +18,8 @@ public class Brand {
 
     private String name;
 
+    @OneToMany(mappedBy = "brand")
+    private List<Product> products;
     public Brand() {
     }
 

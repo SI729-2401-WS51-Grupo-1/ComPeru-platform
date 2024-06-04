@@ -17,7 +17,7 @@ public interface ProductQueryService {
     List<Product> handle(GetAllProductsByCategoryIdQuery query);
     List<Product> handle(GetAllProductsByBrandIdQuery query);
     List<Product> handle(GetAllProductsBySearchQuery query);
-    List<ReviewId> handle(GetAllReviewsByProductIdQuery query);
+//    List<ReviewId> handle(GetAllReviewsByProductIdQuery query);
 
 }
 
