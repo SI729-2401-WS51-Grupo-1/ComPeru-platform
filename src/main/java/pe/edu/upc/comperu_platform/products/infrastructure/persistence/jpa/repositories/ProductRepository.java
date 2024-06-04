@@ -2,7 +2,6 @@ package pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repo
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
-import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.EntrepreneurId;
 import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.ProductRatingsMetricSet;
 
 import java.util.List;
@@ -18,5 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByAvailabilityTrue();
     List<Product> findByAvailabilityFalse();
     List<Product> findByRatingBetween(ProductRatingsMetricSet rating, ProductRatingsMetricSet rating2) ;
+
+    boolean existsByName(String name);
+
 
 }

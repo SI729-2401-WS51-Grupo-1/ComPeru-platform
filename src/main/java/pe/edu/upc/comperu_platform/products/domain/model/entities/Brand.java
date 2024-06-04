@@ -12,7 +12,7 @@ import pe.edu.upc.comperu_platform.shared.domain.model.entities.User;
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     private String name;
 

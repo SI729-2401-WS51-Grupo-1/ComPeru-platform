@@ -15,7 +15,6 @@ public class ImageAsset {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
     private String url;
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -24,8 +23,7 @@ public class ImageAsset {
 
     public ImageAsset(){
     }
-    public ImageAsset(String name, String url){
-        this.name=name;
+    public ImageAsset( String url){
         this.url=url;
     }
 

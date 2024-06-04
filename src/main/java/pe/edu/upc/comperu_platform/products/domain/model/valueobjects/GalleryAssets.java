@@ -20,4 +20,20 @@ public class GalleryAssets {
         this.images = new ArrayList<>();
     }
 
+    public void AddAsset(String url){
+        this.images.add(new ImageAsset(url));
+    }
+
+    public void RemoveAsset(Long id){
+        ImageAsset imageToRemove = null;
+        for (ImageAsset image : images) {
+            if (image.getId().equals(id)) {
+                imageToRemove = image;
+                break;
+            }
+        }
+        if (imageToRemove != null) {
+            images.remove(imageToRemove);
+        }
+    }
 }
