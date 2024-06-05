@@ -1,10 +1,13 @@
 package pe.edu.upc.comperu_platform.products.application.internal.commandservices;
 
+import org.springframework.stereotype.Service;
 import pe.edu.upc.comperu_platform.products.domain.model.commands.CreateCategoryCommand;
 import pe.edu.upc.comperu_platform.products.domain.model.entities.Category;
 import pe.edu.upc.comperu_platform.products.domain.services.CategoryCommandService;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.CategoryRepository;
 
+
+@Service
 public class CategoryCommandServiceImpl implements CategoryCommandService {
 
    private final CategoryRepository categoryRepository;
