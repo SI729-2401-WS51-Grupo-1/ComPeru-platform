@@ -145,7 +145,7 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.entrepreneurId = new EntrepreneurId(command.entrepreneurId());
 
         // Añadir las imágenes a la galería
-        command.imageUrls().forEach(url -> this.galleryAssets.getImages().add(new ImageAsset(url)));
+        command.imageUrls().forEach(url -> this.galleryAssets.AddAsset(this, url));
     }
 
     public void UpdateInformation(String name, String description,
@@ -166,12 +166,22 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.brand = brand;
         this.category = category;
         this.entrepreneurId = new EntrepreneurId(entrepreneurId);
-        imageUrls.forEach(url -> this.galleryAssets.getImages().add(new ImageAsset(url)));
+
+        // Delete image of gallery because we want update the images
+        this.galleryAssets.getImages().clear();
+
+        // Aggregate the news images
+        imageUrls.forEach(url -> this.galleryAssets.AddAsset(this, url));
 
     }
 
     public void AddImageToGallery(String url){
-        this.galleryAssets.AddAsset(url);
+
+        this.galleryAssets.AddAsset(this,url);
+    }
+
+    public void AddImageToGallery(String url, String nextUrl){
+        this.galleryAssets.AddAsset(this,url,nextUrl);
     }
 
     public void RemoveImageToGallery(Long Id){
