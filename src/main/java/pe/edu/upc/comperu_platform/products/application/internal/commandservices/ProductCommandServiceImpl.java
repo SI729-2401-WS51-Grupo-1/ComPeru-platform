@@ -11,6 +11,8 @@ import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repos
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.CategoryRepository;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.ProductRepository;
 
+import java.util.Optional;
+
 @Service
 
 public class ProductCommandServiceImpl implements ProductCommandService {
@@ -39,7 +41,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     }
 
     @Override
-    public void handle(UpdateProductCommand command) {
+    public Optional<Product> handle(UpdateProductCommand command) {
 
         var productOptional = productRepository.findById(command.productId());
         if(productOptional.isEmpty()){
@@ -56,7 +58,8 @@ public class ProductCommandServiceImpl implements ProductCommandService {
                     command.manufacturerNumber(), command.price(), command.availability(),
                     command.stock(), brand, category, command.entrepreneurId(), command.imageUrls());
 
-            productRepository.save(product);
+           var updatedProduct = productRepository.save(product);
+           return Optional.of(updatedProduct);
 
         }catch (Exception e){
             throw new IllegalArgumentException("Error while updating product: " + e.getMessage());
@@ -70,6 +73,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
         }
 
         try {
+
             productRepository.deleteById(command.productId());
         }catch (Exception e){
             throw new IllegalArgumentException("Error while deleting product: " + e.getMessage());
@@ -107,7 +111,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     }
 
     @Override
-    public void handle(UpdateProductAvailabilityCommand command) {
+    public Optional<Product> handle(UpdateProductAvailabilityCommand command) {
         var productOpt = productRepository.findById(command.productId());
         if(productOpt.isEmpty()){
             throw new IllegalArgumentException("Product doesn't exist");
@@ -116,6 +120,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
             var product = productOpt.get();
             product.UpdateAvailability(command.availability());
             productRepository.save(product);
+            return Optional.of(product);
         }catch (Exception e){
             throw new IllegalArgumentException("Error while updating product : " + e.getMessage());
         }
@@ -123,7 +128,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     }
 
     @Override
-    public void handle(UpdateProductStockCommand command) {
+    public Optional<Product> handle(UpdateProductStockCommand command) {
         var productOpt = productRepository.findById(command.productId());
         if(productOpt.isEmpty()){
             throw new IllegalArgumentException("Product doesn't exist");
@@ -132,6 +137,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
             var product = productOpt.get();
             product.UpdateStock(command.stock());
             productRepository.save(product);
+            return Optional.of(product);
         }catch (Exception e){
             throw new IllegalArgumentException("Error while updating product : " + e.getMessage());
         }

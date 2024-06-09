@@ -10,8 +10,11 @@ import pe.edu.upc.comperu_platform.products.domain.services.ProductCommandServic
 import pe.edu.upc.comperu_platform.products.domain.services.ProductQueryService;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.CreateProductResource;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.ProductResource;
+import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.UpdateStockProductResource;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.CreateProductCommandFromResourceAssembler;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.ProductResourceFromEntityAssembler;
+import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.UpdateProductCommandFromResourceAssembler;
+import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.UpdateProductStockCommandFromResourceAssembler;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -54,6 +57,28 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         var productResource = ProductResourceFromEntityAssembler.toResourceFromEntity(product.get());
+        return ResponseEntity.ok(productResource);
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResource> updateProduct(@PathVariable Long productId,@RequestBody CreateProductResource createProductResource){
+        var updateProductCommand = UpdateProductCommandFromResourceAssembler.toCommandFromResource(productId,createProductResource);
+        var updateProduct = productCommandService.handle(updateProductCommand);
+        if(updateProduct.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        var productResource = ProductResourceFromEntityAssembler.toResourceFromEntity(updateProduct.get());
+        return ResponseEntity.ok(productResource);
+    }
+
+    @PutMapping("/{productId}/stock")
+    public ResponseEntity<ProductResource> updateStockProduct(@PathVariable Long productId, @RequestBody UpdateStockProductResource updateStockProductResource) {
+        var updateStockProductCommand = UpdateProductStockCommandFromResourceAssembler.ToCommandFromResource(productId, updateStockProductResource);
+        var updateProduct = productCommandService.handle(updateStockProductCommand);
+        if (updateProduct.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var productResource = ProductResourceFromEntityAssembler.toResourceFromEntity(updateProduct.get());
         return ResponseEntity.ok(productResource);
     }
 

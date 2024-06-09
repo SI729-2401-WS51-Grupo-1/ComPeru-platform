@@ -22,6 +22,7 @@ public class ProductResourceFromEntityAssembler {
         }
 
         return new ProductResource(
+                entity.getId(),
                 entity.getName(),
                 entity.getDescription(),
                 entity.getModelNumber(),

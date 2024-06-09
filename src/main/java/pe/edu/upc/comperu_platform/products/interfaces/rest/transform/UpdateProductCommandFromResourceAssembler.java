@@ -1,11 +1,11 @@
 package pe.edu.upc.comperu_platform.products.interfaces.rest.transform;
 
 import pe.edu.upc.comperu_platform.products.domain.model.commands.UpdateProductCommand;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.ProductResource;
+import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.CreateProductResource;
 
 public class UpdateProductCommandFromResourceAssembler {
 
-    public static UpdateProductCommand toCommandFromResource(Long productId, ProductResource resource){
+    public static UpdateProductCommand toCommandFromResource(Long productId, CreateProductResource resource){
         return new UpdateProductCommand(productId,
                 resource.name(),
                 resource.description(),
@@ -14,8 +14,8 @@ public class UpdateProductCommandFromResourceAssembler {
                 resource.price(),
                 resource.availability(),
                 resource.stock(),
-                resource.brand().Id(),
-                resource.category().Id(),
+                resource.brandId(),
+                resource.categoryId(),
                 resource.entrepreneurId(),
                 resource.imageUrls()
         );
