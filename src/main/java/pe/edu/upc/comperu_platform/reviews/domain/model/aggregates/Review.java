@@ -17,4 +17,14 @@ public class Review extends AuditableAbstractAggregateRoot<Review> {
         this.content = Strings.EMPTY;
         this.rating = Rating.REGULAR;
     }
+
+    public Review(String content){
+        this.content=content;
+        this.rating=Rating.REGULAR;
+    }
+
+    public Review(String content, Rating rating){
+        this.content=content;
+        this.rating=rating;
+    }
 }
