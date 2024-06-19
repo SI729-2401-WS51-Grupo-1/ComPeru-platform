@@ -1,4 +1,7 @@
 package pe.edu.upc.comperu_platform.reviews.interfaces.rest.resources;
 
-public class ReviewResource {
+import pe.edu.upc.comperu_platform.reviews.domain.model.valueobjects.Rating;
+import pe.edu.upc.comperu_platform.shared.domain.model.entities.User;
+
+public record ReviewResource(User user, String content, Rating rating) {
 }

@@ -6,5 +6,4 @@ import pe.edu.upc.comperu_platform.reviews.domain.model.aggregates.Review;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long>{
-
 }
