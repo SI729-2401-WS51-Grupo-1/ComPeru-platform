@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.upc.comperu_platform.reviews.domain.model.aggregates.Review;
 import pe.edu.upc.comperu_platform.reviews.domain.model.queries.GetAllReviewsByRatingQuery;
 import pe.edu.upc.comperu_platform.reviews.domain.model.queries.GetAllReviewsQuery;
+import pe.edu.upc.comperu_platform.reviews.domain.model.queries.GetReviewByIdQuery;
 import pe.edu.upc.comperu_platform.reviews.domain.services.ReviewQueryService;
 import pe.edu.upc.comperu_platform.reviews.infrastructure.persistence.jpa.repositories.ReviewRepository;
 
@@ -20,11 +21,16 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
 
     @Override
     public List<Review> handle(GetAllReviewsQuery query) {
-        return List.of();
+        return reviewRepository.findAll();
     }
 
     @Override
     public Optional<Review> handle(GetAllReviewsByRatingQuery query) {
-        return Optional.empty();
+        return reviewRepository.findByRating(query.rating());
+    }
+
+    @Override
+    public Optional<Review> handle(GetReviewByIdQuery query) {
+        return reviewRepository.findById(query.reviewId());
     }
 }
