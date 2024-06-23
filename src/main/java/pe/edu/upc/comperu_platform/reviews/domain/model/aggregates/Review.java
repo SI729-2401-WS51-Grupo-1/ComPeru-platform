@@ -11,32 +11,34 @@ import pe.edu.upc.comperu_platform.shared.domain.model.entities.User;
 @Getter
 @Entity
 public class Review extends AuditableAbstractAggregateRoot<Review> {
-    private User user;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
 
     private String content;
 
-    private Rating rating;
+    private int rating;
 
     public Review(){
-        this.user=new User();
+        this.userId=new User();
         this.content = Strings.EMPTY;
-        this.rating = Rating.REGULAR;
+        this.rating = 0;
     }
 
     public Review(User user, String content){
-        this.user=user;
+        this.userId=user;
         this.content=content;
-        this.rating=Rating.REGULAR;
+        this.rating=0;
     }
 
-    public Review(String content, Rating rating){
+    public Review(String content, int rating){
         this.content=content;
         this.rating=rating;
     }
 
     public Review(CreateReviewCommand command) {
         this();
-        this.user = command.user();
+        this.userId = command.user();
         this.content = command.content();
         this.rating = command.rating();
     }
