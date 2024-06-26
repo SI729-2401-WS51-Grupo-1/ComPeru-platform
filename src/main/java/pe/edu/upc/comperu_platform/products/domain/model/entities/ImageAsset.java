@@ -25,22 +25,25 @@ public class ImageAsset {
     @NotNull
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "next_image_id")
-    private ImageAsset nextImage;
 
     public ImageAsset(){
         this.url= "";
-        this.nextImage = null;
     }
-    public ImageAsset(Product product, String url,ImageAsset nextImage){
+    public ImageAsset(Product product, String url){
         this.product = product;
         this.url=url;
-        this.nextImage=nextImage;
     }
 
-    public void updateNextImage(ImageAsset nextImage){
-        this.nextImage = nextImage;
+    @Override
+    public String toString() {
+        return "ImageAsset{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", product=" + product +
+                '}';
     }
+//    public void updateNextImage(ImageAsset nextImage){
+//        this.nextImage = nextImage;
+//    }
 
 }

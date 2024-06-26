@@ -5,16 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.comperu_platform.products.domain.model.commands.DeleteProductCommand;
 import pe.edu.upc.comperu_platform.products.domain.model.queries.GetProductByIdQuery;
 import pe.edu.upc.comperu_platform.products.domain.services.ProductCommandService;
 import pe.edu.upc.comperu_platform.products.domain.services.ProductQueryService;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.CreateProductResource;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.ProductResource;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.UpdateStockProductResource;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.CreateProductCommandFromResourceAssembler;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.ProductResourceFromEntityAssembler;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.UpdateProductCommandFromResourceAssembler;
-import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.UpdateProductStockCommandFromResourceAssembler;
+import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.*;
+import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -80,6 +76,37 @@ public class ProductController {
         }
         var productResource = ProductResourceFromEntityAssembler.toResourceFromEntity(updateProduct.get());
         return ResponseEntity.ok(productResource);
+    }
+
+    @PutMapping("/{productId}/images")
+    public ResponseEntity<ProductResource> addImageToProduct(@PathVariable Long productId, @RequestBody AddImageToProductResource addImageToProductResource){
+        var addImageToProductCommand = AddImageToProductCommandFromResourceAssembler.ToCommandFromResource(productId,addImageToProductResource);
+         productCommandService.handle(addImageToProductCommand);
+        var productById = new GetProductByIdQuery(productId);
+        var updateProduct = productQueryService.handle(productById);
+        if(updateProduct.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        var resource = ProductResourceFromEntityAssembler.toResourceFromEntity(updateProduct.get());
+        return ResponseEntity.ok(resource);
+    }
+
+    @PutMapping("/{productId}/availability")
+    public ResponseEntity<ProductResource> updateAvailabilityProduct(@PathVariable Long productId, @RequestBody ModifyAvailabilityProductResource modifyAvailabilityProductResource){
+        var updateAvailabilityCommand = UpdateProductAvailabilityCommandFromResourceAssembler.ToCommandFromResource(productId,modifyAvailabilityProductResource);
+        var updateProduct = productCommandService.handle(updateAvailabilityCommand);
+        if (updateProduct.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var productResource = ProductResourceFromEntityAssembler.toResourceFromEntity(updateProduct.get());
+        return ResponseEntity.ok(productResource);
+    }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long productId){
+        var deleteProductCommand = new DeleteProductCommand(productId);
+        productCommandService.handle(deleteProductCommand);
+        return ResponseEntity.ok("Product with given id successfully deleted");
     }
 
 

@@ -1,5 +1,6 @@
 package pe.edu.upc.comperu_platform.products.application.internal.commandservices;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
 import pe.edu.upc.comperu_platform.products.domain.model.commands.*;
@@ -81,20 +82,24 @@ public class ProductCommandServiceImpl implements ProductCommandService {
 
     }
 
+//    @Transactional
     @Override
     public void handle(AddImageToProductCommand command) {
-        if(!productRepository.existsById(command.productId())){
-            try {
-                productRepository.findById(command.productId()).map( product -> {
-                    product.AddImageToGallery(command.imageUrl());
-                    productRepository.save(product);
-                    System.out.println("Imag added to gallery");
-                    return product;
-                });
-            }catch (Exception e){
-                throw new IllegalArgumentException("Error while adding image to gallery: " + e.getMessage());
 
-            }
+        if(!productRepository.existsById(command.productId())){
+            throw new IllegalArgumentException("Product does not exist");
+        }
+        try {
+            productRepository.findById(command.productId()).map(product ->{
+                product.AddImageToGallery(command.imageUrl());
+                productRepository.save(product);
+                System.out.println("Image added to product with ID: " + command.productId());
+                System.out.println("Image URL: " + command.imageUrl());
+                return product;
+            });
+        }catch (Exception e){
+            throw new IllegalArgumentException("Error while adding image to gallery: " + e.getMessage());
+
         }
     }
 

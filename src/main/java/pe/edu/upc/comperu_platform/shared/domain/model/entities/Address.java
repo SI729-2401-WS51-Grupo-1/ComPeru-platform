@@ -14,8 +14,7 @@ public class Address {
     @JoinColumn(name = "district_id")
     @NotNull
     private District district;
-    @OneToOne(mappedBy = "address")
-    private User user;
+
 
     public Address(){}
 
