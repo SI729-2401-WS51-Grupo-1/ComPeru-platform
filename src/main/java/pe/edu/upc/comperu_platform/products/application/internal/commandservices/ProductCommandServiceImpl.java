@@ -147,4 +147,20 @@ public class ProductCommandServiceImpl implements ProductCommandService {
             throw new IllegalArgumentException("Error while updating product : " + e.getMessage());
         }
     }
+
+    @Override
+    public Optional<Product> handle(UpdateRatingProductCommand command) {
+        var productOpt = productRepository.findById(command.productId());
+        if(productOpt.isEmpty()){
+            throw new IllegalArgumentException("Product doesn't exist");
+        }
+        try {
+            var product = productOpt.get();
+            product.UpdateRating(command.newRating());
+            productRepository.save(product);
+            return Optional.of(product);
+        }catch (Exception e){
+            throw new IllegalArgumentException("Error while updating product : " + e.getMessage());
+        }
+    }
 }

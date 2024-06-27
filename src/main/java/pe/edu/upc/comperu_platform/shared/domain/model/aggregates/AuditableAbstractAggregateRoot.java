@@ -26,6 +26,6 @@ public class AuditableAbstractAggregateRoot<T extends AbstractAggregateRoot<T>> 
 
     @Getter
     @LastModifiedDate
-    @Column(nullable = false)
+     @Column(nullable = false)
     private Date updatedAt;
 }

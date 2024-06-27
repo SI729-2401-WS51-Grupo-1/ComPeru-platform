@@ -5,6 +5,6 @@ import pe.edu.upc.comperu_platform.reviews.interfaces.rest.resources.ReviewResou
 
 public class ReviewResourceFromEntityAssembler {
     public static ReviewResource toResourceFromEntity(Review entity) {
-        return new ReviewResource(entity.getUserId(), entity.getContent(), entity.getRating());
+        return new ReviewResource(entity.getId(), entity.getUserId().userId(),entity.getProductId().productId(), entity.getContent(), entity.getRating().rating());
     }
 }

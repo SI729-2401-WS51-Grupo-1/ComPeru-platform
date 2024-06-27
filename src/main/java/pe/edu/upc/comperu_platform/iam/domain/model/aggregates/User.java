@@ -25,14 +25,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class User  {
+public class User extends AuditableAbstractAggregateRoot<User> {
 
-    @Id
-    @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
+//    @Id
+//    @Getter
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
 //    @Getter
 //    @CreatedDate

@@ -15,5 +15,7 @@ public interface ProductCommandService {
     Optional<Product> handle(UpdateProductAvailabilityCommand command);
     Optional<Product> handle(UpdateProductStockCommand command);
 
+    Optional<Product> handle(UpdateRatingProductCommand command);
+
 }
 

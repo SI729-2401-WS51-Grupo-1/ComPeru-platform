@@ -5,6 +5,6 @@ import pe.edu.upc.comperu_platform.reviews.interfaces.rest.resources.CreateRevie
 
 public class CreateReviewCommandFromResourceAssembler {
     public static CreateReviewCommand toCommandFromResource(CreateReviewResource resource) {
-        return new CreateReviewCommand(resource.user(), resource.content(), resource.rating());
+        return new CreateReviewCommand(resource.userId(),resource.productId(), resource.content(), resource.rating());
     }
 }

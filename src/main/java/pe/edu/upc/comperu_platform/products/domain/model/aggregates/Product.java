@@ -52,9 +52,6 @@ public class Product extends AbstractAggregateRoot<Product> {
     @Embedded
     private ProductRatingsMetricSet rating;
 
-   @Embedded
-   private ProductReviewsMetricSet totalReviews;
-
     @CreatedDate
     private Date createdAt;
 
@@ -74,27 +71,18 @@ public class Product extends AbstractAggregateRoot<Product> {
     private final GalleryAssets galleryAssets;
 
 //    private ListReviews reviews;
+//    @Embedded
+//    private final ListReviews listReviews;
 
     @Embedded
     private EntrepreneurId entrepreneurId;
 
-    @ManyToOne
-    @JoinColumn(name= "next_product_id")
-    private Product nextProduct;
-
-
-    public void updateNextProduct(Product nextProduct){
-        this.nextProduct=nextProduct;
-    }
 
     public Product(){
         this.price=new Price();
         this.rating= new ProductRatingsMetricSet();
-        this.totalReviews=new ProductReviewsMetricSet();
-        this.nextProduct=null;
         this.galleryAssets = new GalleryAssets();
-//        this.reviews = new ListReviews();
-
+//        this.listReviews = new ListReviews();
     }
 
 
@@ -102,7 +90,6 @@ public class Product extends AbstractAggregateRoot<Product> {
         this();
         this.brand=brand;
         this.category=category;
-        this.nextProduct= nextProduct;
         this.entrepreneurId = entrepreneurId;
     }
 
@@ -189,4 +176,14 @@ public class Product extends AbstractAggregateRoot<Product> {
     public void UpdateAvailability(Boolean availability){
         this.availability = availability;
     }
+    public void UpdateRating(double newRating){this.rating = new ProductRatingsMetricSet(newRating);}
+
+//    public void addReview(Long reviewId) {
+//        this.listReviews.addReview(reviewId);
+//    }
+//
+//    public void removeReview(Long reviewId) {
+//        this.listReviews.removeReview(reviewId);
+//    }
+
 }
