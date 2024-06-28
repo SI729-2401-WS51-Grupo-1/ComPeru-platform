@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,9 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import pe.edu.upc.comperu_platform.products.domain.model.commands.CreateProductCommand;
 import pe.edu.upc.comperu_platform.products.domain.model.entities.Brand;
 import pe.edu.upc.comperu_platform.products.domain.model.entities.Category;
-import pe.edu.upc.comperu_platform.products.domain.model.entities.ImageAsset;
 import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.*;
-import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.BrandRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -75,7 +72,7 @@ public class Product extends AbstractAggregateRoot<Product> {
 //    private final ListReviews listReviews;
 
     @Embedded
-    private EntrepreneurId entrepreneurId;
+    private UserId userId;
 
 
     public Product(){
@@ -83,14 +80,6 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.rating= new ProductRatingsMetricSet();
         this.galleryAssets = new GalleryAssets();
 //        this.listReviews = new ListReviews();
-    }
-
-
-    public Product(Brand brand , Category category, Product nextProduct,EntrepreneurId entrepreneurId ){
-        this();
-        this.brand=brand;
-        this.category=category;
-        this.entrepreneurId = entrepreneurId;
     }
 
     public Product(String name,
@@ -114,7 +103,7 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.stock = stock;
         this.brand = brand;
         this.category = category;
-        this.entrepreneurId = new EntrepreneurId(entrepreneurId);
+        this.userId = new UserId(entrepreneurId);
 
     }
 
@@ -129,7 +118,7 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.stock = command.stock();
         this.brand = brand;
         this.category = category;
-        this.entrepreneurId = new EntrepreneurId(command.entrepreneurId());
+        this.userId = new UserId(command.entrepreneurId());
 
         // Añadir las imágenes a la galería
         command.imageUrls().forEach(url -> this.galleryAssets.addAsset(this, url));
@@ -152,7 +141,7 @@ public class Product extends AbstractAggregateRoot<Product> {
         this.stock = stock;
         this.brand = brand;
         this.category = category;
-        this.entrepreneurId = new EntrepreneurId(entrepreneurId);
+        this.userId = new UserId(entrepreneurId);
 
         // Delete image of gallery because we want update the images
         this.galleryAssets.getImages().clear();

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.comperu_platform.products.domain.model.queries.GetAllBrandsQuery;
 import pe.edu.upc.comperu_platform.products.domain.model.queries.GetBrandByIdQuery;
 import pe.edu.upc.comperu_platform.products.domain.services.BrandCommandService;
 import pe.edu.upc.comperu_platform.products.domain.services.BrandQueryService;
@@ -12,6 +13,8 @@ import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.BrandResou
 import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.CreateBrandResource;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.BrandResourceFromEntityAssembler;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.CreateBrandCommandFromResourceAssembler;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -60,6 +63,14 @@ public class BrandController {
         }
         var brandResource= BrandResourceFromEntityAssembler.toResourceFromEntity(brand.get());
         return ResponseEntity.ok(brandResource);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BrandResource>> getAllBrands(){
+        var getAllBrandsQuery = new GetAllBrandsQuery();
+        var brands = brandQueryService.handle(getAllBrandsQuery);
+        var brandsResources = brands.stream().map(BrandResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(brandsResources);
     }
 
 

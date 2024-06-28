@@ -13,6 +13,7 @@ public record ProductResource(Long id,
                               BrandResource brand,
                               CategoryResource category,
                               Long entrepreneurId,
+                              double rating,
                               List<String> imageUrls
 
                               ) {

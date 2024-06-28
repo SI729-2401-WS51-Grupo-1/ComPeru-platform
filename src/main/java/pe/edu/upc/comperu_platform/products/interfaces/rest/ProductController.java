@@ -6,11 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.comperu_platform.products.domain.model.commands.DeleteProductCommand;
+import pe.edu.upc.comperu_platform.products.domain.model.queries.GetAllProductsQuery;
 import pe.edu.upc.comperu_platform.products.domain.model.queries.GetProductByIdQuery;
 import pe.edu.upc.comperu_platform.products.domain.services.ProductCommandService;
 import pe.edu.upc.comperu_platform.products.domain.services.ProductQueryService;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.*;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.*;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -109,5 +112,12 @@ public class ProductController {
         return ResponseEntity.ok("Product with given id successfully deleted");
     }
 
+    @GetMapping
+    public ResponseEntity<List<ProductResource>> getAllProducts(){
+        var getAllProductsQuery = new GetAllProductsQuery();
+        var products = productQueryService.handle(getAllProductsQuery);
+        var productsResources = products.stream().map(ProductResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(productsResources);
+    }
 
 }

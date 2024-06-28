@@ -3,6 +3,7 @@ package pe.edu.upc.comperu_platform.reviews.domain.model.aggregates;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
+import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
 import pe.edu.upc.comperu_platform.reviews.domain.model.commands.CreateReviewCommand;
 import pe.edu.upc.comperu_platform.reviews.domain.model.valueobjects.ProductId;
 import pe.edu.upc.comperu_platform.reviews.domain.model.valueobjects.Rating;
@@ -16,7 +17,6 @@ public class Review extends AuditableAbstractAggregateRoot<Review> {
 
     @Embedded
     private UserId userId;
-
 
     private String content;
 

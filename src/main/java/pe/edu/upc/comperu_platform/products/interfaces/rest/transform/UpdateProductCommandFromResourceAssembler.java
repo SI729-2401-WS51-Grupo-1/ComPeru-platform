@@ -16,7 +16,7 @@ public class UpdateProductCommandFromResourceAssembler {
                 resource.stock(),
                 resource.brandId(),
                 resource.categoryId(),
-                resource.entrepreneurId(),
+                resource.userId(),
                 resource.imageUrls()
         );
     }

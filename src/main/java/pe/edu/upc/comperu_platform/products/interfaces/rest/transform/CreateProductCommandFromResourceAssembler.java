@@ -16,7 +16,7 @@ public class CreateProductCommandFromResourceAssembler {
                 resource.stock(),
                 resource.brandId(),
                 resource.categoryId(),
-                resource.entrepreneurId(),
+                resource.userId(),
                 resource.imageUrls()
         );
     }

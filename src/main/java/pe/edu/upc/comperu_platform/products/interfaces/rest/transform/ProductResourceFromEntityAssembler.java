@@ -32,7 +32,8 @@ public class ProductResourceFromEntityAssembler {
                 entity.getStock(),
                 brandResource,
                 categoryResource,
-                entity.getEntrepreneurId().entrepreneurId(),
+                entity.getUserId().userId(),
+                entity.getRating().averageRating(),
                 imageUrls
                 );
     }

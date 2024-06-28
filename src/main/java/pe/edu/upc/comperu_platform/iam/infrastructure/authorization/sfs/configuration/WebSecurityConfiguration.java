@@ -69,8 +69,9 @@ public class WebSecurityConfiguration {
         http.csrf(csrfConfigurer -> csrfConfigurer.disable())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(unauthorizedRequestHandler))
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(
-                        authorizeRequests -> authorizeRequests.requestMatchers("/api/v1/users","/api/v1/categories",
+                .authorizeHttpRequests(authorizeRequests ->
+                                authorizeRequests
+                                .requestMatchers("/api/v1/users","/api/v1/categories",
                                         "/api/v1/authentication/**", "/v3/api-docs/**", "/swagger-ui.html",
                                         "/swagger-ui/**", "/swagger-resources/**", "/webjars/**")
                                 .permitAll()

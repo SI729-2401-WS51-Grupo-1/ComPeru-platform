@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.comperu_platform.products.domain.model.queries.GetAllCategoriesQuery;
 import pe.edu.upc.comperu_platform.products.domain.model.queries.GetCategoryByIdQuery;
 import pe.edu.upc.comperu_platform.products.domain.services.CategoryCommandService;
 import pe.edu.upc.comperu_platform.products.domain.services.CategoryQueryService;
@@ -12,6 +13,8 @@ import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.CategoryRe
 import pe.edu.upc.comperu_platform.products.interfaces.rest.resources.CreateCategoryResource;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.CategoryResourceFromEntityAssembler;
 import pe.edu.upc.comperu_platform.products.interfaces.rest.transform.CreateCategoryCommandFromResourceAssembler;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -61,6 +64,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryResource);
     }
 
-
+    @GetMapping
+    public ResponseEntity<List<CategoryResource>> getAllCategories(){
+        var getAllCategoriesQuery = new GetAllCategoriesQuery();
+        var categories = categoryQueryService.handle(getAllCategoriesQuery);
+        var categoriesResources = categories.stream().map(CategoryResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(categoriesResources);
+    }
 
 }

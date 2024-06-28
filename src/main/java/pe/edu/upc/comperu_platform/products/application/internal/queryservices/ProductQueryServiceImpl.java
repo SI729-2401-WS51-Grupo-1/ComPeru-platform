@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.upc.comperu_platform.products.domain.model.aggregates.Product;
 import pe.edu.upc.comperu_platform.products.domain.model.entities.ImageAsset;
 import pe.edu.upc.comperu_platform.products.domain.model.queries.*;
-import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.EntrepreneurId;
-import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.ReviewId;
+import pe.edu.upc.comperu_platform.products.domain.model.valueobjects.UserId;
 import pe.edu.upc.comperu_platform.products.domain.services.ProductQueryService;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.CategoryRepository;
 import pe.edu.upc.comperu_platform.products.infrastructure.persistence.jpa.repositories.ProductRepository;
@@ -35,13 +34,13 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     @Override
     public List<Product> handle(GetAllProductsByEntrepreneurIdQuery query) {
 
-        return productRepository.findByEntrepreneurId(query.entrepreneurId());
+        return productRepository.findByUserId(new UserId(query.entrepreneurId()));
     }
 
     @Override
     public Optional<Product> handle(GetProductByProductIdAndEntrepreneurIdQuery query) {
 
-        return productRepository.findByIdAndEntrepreneurId(query.productId(),query.entrepreneurId());
+        return productRepository.findByIdAndUserId(query.productId(),query.entrepreneurId());
 
     }
 
@@ -70,6 +69,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     public List<Product> handle(GetAllProductsBySearchQuery query) {
 
         return productRepository.findByNameContainingIgnoreCase(query.searchTerm());
+    }
+
+    @Override
+    public List<Product> handle(GetAllProductsQuery query) {
+        return productRepository.findAll();
     }
 
 //    @Override

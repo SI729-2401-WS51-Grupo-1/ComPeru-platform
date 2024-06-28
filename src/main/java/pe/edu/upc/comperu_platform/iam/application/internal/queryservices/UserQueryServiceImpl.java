@@ -2,9 +2,11 @@ package pe.edu.upc.comperu_platform.iam.application.internal.queryservices;
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.comperu_platform.iam.domain.model.aggregates.User;
+import pe.edu.upc.comperu_platform.iam.domain.model.entities.Role;
 import pe.edu.upc.comperu_platform.iam.domain.model.queries.GetAllUsersQuery;
 import pe.edu.upc.comperu_platform.iam.domain.model.queries.GetUserByIdQuery;
 import pe.edu.upc.comperu_platform.iam.domain.model.queries.GetUserByUsernameQuery;
+import pe.edu.upc.comperu_platform.iam.domain.model.queries.GetUserRoleByUserIdQuery;
 import pe.edu.upc.comperu_platform.iam.domain.services.UserQueryService;
 import pe.edu.upc.comperu_platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 
@@ -58,5 +60,12 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public Optional<User> handle(GetUserByUsernameQuery query) {
         return userRepository.findByUsername(query.username());
+    }
+
+    @Override
+    public Optional<Role> handle(GetUserRoleByUserIdQuery query) {
+        return userRepository.findById(query.userId())
+                .flatMap(user -> user.getRoles().stream().findFirst());
+
     }
 }

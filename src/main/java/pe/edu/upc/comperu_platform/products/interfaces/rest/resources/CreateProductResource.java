@@ -12,6 +12,6 @@ public record CreateProductResource(String name,
                                     Integer stock,
                                     Long brandId,
                                     Long categoryId,
-                                    Long entrepreneurId,
+                                    Long userId,
                                     List<String> imageUrls) {
 }
