@@ -72,7 +72,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests ->
                                 authorizeRequests
                                 .requestMatchers("/api/v1/users","/api/v1/categories","/api/v1/products","/api/v1/products/{productId}","/api/v1/orders",
-                                        "/api/v1/authentication/**", "/v3/api-docs/**", "/swagger-ui.html",
+                                        "/api/v1/authentication/**", "/v3/api-docs/**", "/swagger-ui.html","/api/v1/shipments",
                                         "/api/v1/reviews","/api/v1/brands","/ap/v1/roles","/api/v1/users","/api/v1/users/{userId}",
                                         "/swagger-ui/**", "/swagger-resources/**", "/webjars/**")
                                 .permitAll()
